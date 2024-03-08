@@ -54,3 +54,5 @@ mybatis.configuration.map-underscore-to-camel-case=true
 * xml文件的namespace属性与Mapper接口全限定名一致
 * xml文件中sql语句的id与Mapper接口中的方法名一致，并保持相同的返回类型
 <img width="830" alt="image" src="https://github.com/wufeng10010/mybatis_log/assets/131955051/601bd522-1307-4d2e-82f1-df8f7ab4a10a">
+
+当使用的sql语句较为复杂时，可以使用xml映射文件
