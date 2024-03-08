@@ -35,3 +35,15 @@ public interface EmpMapper {
         System.out.println(emp.getId());
     }
 ```
+
+需要注意的是，如果需要使用查询语句获取员工数据时，往往会遇见字段名与定义的类属性名不一致（将获取到的字段数据封装到类属性中），这是因为字段名通常使用下划线命名，而类属性名通常使用驼峰命名法
+### 解决方法
+* 在@Select注解中给字段取别名与类属性名一致，如：
+```java
+@Select("select id, username, password, name, gender, image, job, entrydate, dept_id deptId, create_time createTime, update_time updateTime from emp where id=#{id}")
+```
+* 开启驼峰命名自动映射，需要在application.properties文件中加入如下语句：
+```java
+#开启mybatis的驼峰命名自动映射开关
+mybatis.configuration.map-underscore-to-camel-case=true
+```
