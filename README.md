@@ -42,7 +42,7 @@ public interface EmpMapper {
 ```java
 @Select("select id, username, password, name, gender, image, job, entrydate, dept_id deptId, create_time createTime, update_time updateTime from emp where id=#{id}")
 ```
-* 开启驼峰命名自动映射，需要在application.properties文件中加入如下语句：
+* 开启驼峰命名自动映射，需要在application.properties文件中将映射开关置为true
 ```java
 #开启mybatis的驼峰命名自动映射开关
 mybatis.configuration.map-underscore-to-camel-case=true
