@@ -10,7 +10,8 @@
 # 3.4
 使用分层解耦的方式来搭建一个springboot的小demo，了解了IOC（控制反转）和DI（依赖注入）的设计思想
 
-# 3.6 mybatis基础操作(预编译SQL)
+# 3.6 
+mybatis基础操作(预编译SQL)
 
 # 3.8
 使用mybatis操控数据库
