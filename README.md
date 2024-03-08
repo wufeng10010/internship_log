@@ -6,7 +6,7 @@
 
 ### 使用注解
 使用mybatis的注解，主要是用来完成一些简单的增删改查，如使用sql的insert语句，需要在Mapper接口中定义一个方法，并在方法上面添加@Insert注解
-'''java
+```java
 @Mapper
 public interface EmpMapper {
     //新增员工
@@ -14,9 +14,9 @@ public interface EmpMapper {
     @Insert("insert into emp(username, name, gender, image, job, entrydate, dept_id, create_time, update_time) " +
             "values (#{username}, #{name}, #{gender}, #{image}, #{job}, #{entrydate}, #{deptId}, #{createTime}, #{updateTime})")
     public void insert(Emp emp);
-'''
+```
 在测试类中，定义insert的测试方法，new一个员工对象，将属性赋值给emp，然后调用Mapper接口中的插入方法
-'''java
+```java
 @Test
     public void testInsert(){
         Emp emp = new Emp();
@@ -34,4 +34,4 @@ public interface EmpMapper {
         empMapper.insert(emp);
         System.out.println(emp.getId());
     }
-'''
+```
