@@ -47,3 +47,10 @@ public interface EmpMapper {
 #开启mybatis的驼峰命名自动映射开关
 mybatis.configuration.map-underscore-to-camel-case=true
 ```
+
+## 基于.xml文件
+### 规范
+* xml映射文件的名称与接口名称保持一致，并且将xml文件与Mapper接口放置在相同的包下（同包同名）
+* xml文件的namespace属性与Mapper接口全限定名一致
+* xml文件中sql语句的id与Mapper接口中的方法名一致，并保持相同的返回类型
+<img width="830" alt="image" src="https://github.com/wufeng10010/mybatis_log/assets/131955051/601bd522-1307-4d2e-82f1-df8f7ab4a10a">
