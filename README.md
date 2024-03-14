@@ -100,3 +100,19 @@ public class AliOSSUtils {
     private String bucketName;
 }
 ```
+当然，使用@Value注解仍然会显得有些繁琐臃肿，则可以使用@ConfigurationProperties(prefix=前缀)注解，直接在类上加上这个注解，声明在配置文件这些属性值的前缀
+```java
+@Data
+@Component
+@ConfigurationProperties(prefix = "aliyun.oss")
+public class AliOSSUtils {
+
+    private String endpoint;
+
+    private String accessKeyId;
+
+    private String accessKetSecret;
+
+    private String bucketName;
+}
+```
