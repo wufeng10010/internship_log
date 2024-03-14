@@ -40,3 +40,19 @@ spring:
     username: root
     password: 123456
 ```
+需要注意的是数值前面要有空格（即冒号后），使用空格来缩进表示层级关系，缩进的空格数目不重要，只有相同层级的元素左边对齐即可
+### yml数据格式
+* 对象/Map集合
+```yml
+user:
+  name: zhangsan
+  age: 18
+  password: 123456
+```
+* 数组/List/Set集合
+```yml
+hobby
+  -java
+  -game
+  -sport
+```
