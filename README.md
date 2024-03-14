@@ -24,9 +24,19 @@ springboot配置文件
 #驱动类名称
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 #数据库连接的url
-spring.datasource.url=jdbc:mysql://localhost:3306/mybatis
+spring.datasource.url=jdbc:mysql://localhost:3306/demo01
 #连接数据库的用户名
 spring.datasource.username=root
 #连接数据库的密码
 spring.datasource.password=123456
+```
+一般推荐使用后缀为.yml类型的配置文件，因为.properties的配置文件结构层级不清晰，而.yml则较为简洁，以数据为中心，上述代码在application.yml中的样式为：
+```yml
+spring:
+#  数据库的连接信息
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mybatis
+    username: root
+    password: 123456
 ```
