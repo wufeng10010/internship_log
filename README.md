@@ -52,7 +52,51 @@ user:
 * 数组/List/Set集合
 ```yml
 hobby
-  -java
-  -game
-  -sport
+  - Java
+  - C++
+  - Python
+```
+
+一个重要的注解@Value，通常用于外部配置的属性注入，具体用法为：@Value("${配置文件中的key}")
+
+例如在文件上传时，如果要使用阿里云OSS时，则需要参数，如果我们直接将参数封装到类中（如下）则非常不便维护和管理
+```java
+@Component
+public class AliOSSUtils {
+
+    private String endpoint = "https://oss.console.aliyun.com";
+
+    private String accessKeyId = "LTAI5tNnkubuobYrcwVzRxuN";
+
+    private String accessKetSecret = "YP5cIF7nN5KOgpI61cCFKLTZtD";
+
+    private String bucketName = "web-tlias-wufeng";
+}
+```
+所以我们可以在配置文件中将这些参数配置好
+```yml
+aliyun:
+  oss:
+    endpoint: ttps://oss.console.aliyun.com
+    accessKeyId: LTAI5tNnkubuobYrcwVzRxuN
+    accessKetSecret: YP5cIF7nN5KOgpI61cCFKLTZtD
+    bucketName: web-tlias-wufeng
+```
+然后就可以在AliOSSUtils类中使用@Value注解
+```java
+@Component
+public class AliOSSUtils {
+
+    @Value("${aliyun.oss.endpoint}")
+    private String endpoint;
+
+    @Value("${aliyun.oss.accessKeyId}")
+    private String accessKeyId;
+
+    @Value("${aliyun.oss.accessKetSecret}")
+    private String accessKetSecret;
+
+    @Value("${aliyun.oss.bucketName}")
+    private String bucketName;
+}
 ```
