@@ -62,12 +62,13 @@ public void testGenJwt(){
 ```java
 eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcxMDc1MjYzM30.OgFoQdr3StCiswwh0r5c7-O9cf4hFCfkECSPjl8AhRI
 ```
-## filter过滤器
-filter是javaweb三大组件之一，可以把对资源的请求拦截下来，从而实现特殊功能如登录校验
+## Filter过滤器
+Filter是javaweb三大组件之一，可以把对资源的请求拦截下来，从而实现特殊功能如登录校验
 <img width="952" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/01925542-c6cd-4f74-8a33-de68fc2483c5">
-放行后访问对应资源，还会回到Filter中执行放行后的逻辑
 
-定义一个Filter类，实现fliter接口，并重写其所有方法,引导类上加上@ServletComponentScan注解
+放行后访问对应资源，还会回到Filter中，然后执行放行后的逻辑
+
+定义一个Filter类，实现Fliter接口，并重写其所有方法,引导类上加上@ServletComponentScan注解
 ```java
 @Slf4j
 @WebFilter(urlPatterns = "/*") //@WebFilter注解配置拦截资源的路径，"/*"表示拦截所有请求
@@ -102,4 +103,8 @@ public class TliasWebManagementApplication {
     }
 }
 ```
+## 过滤器链
+* 一个web应用中，可以配置多个过滤器，这多个过滤器就形成了一个过滤器链
+* 顺序，按照过滤器类名（字符串）的自然排序
+<img width="957" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/83004890-fc59-461e-8ed6-f66ab0a1721a">
 
