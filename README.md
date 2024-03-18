@@ -68,7 +68,7 @@ Filter是javaweb三大组件之一，可以把对资源的请求拦截下来，�
 
 放行后访问对应资源，还会回到Filter中，然后执行放行后的逻辑
 
-定义一个Filter类，实现Fliter接口，并重写其所有方法,引导类上加上@ServletComponentScan注解
+定义一个Filter类，实现Fliter接口，并重写其所有方法，引导类上加上@ServletComponentScan注解
 ```java
 @Slf4j
 @WebFilter(urlPatterns = "/*") //@WebFilter注解配置拦截资源的路径，"/*"表示拦截所有请求
