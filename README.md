@@ -65,7 +65,8 @@ eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcxMDc1MjYzM30.OgFoQdr
 ## filter过滤器
 filter是javaweb三大组件之一，可以把对资源的请求拦截下来，从而实现特殊功能如登录校验
 <img width="987" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/5b9662b9-e385-4cae-bed9-d9de76332767">
-定义Filter:定义一个类，实现fliter接口，并重写其所有方法
+
+定义一个Filter类，实现fliter接口，并重写其所有方法,引导类上加上@ServletComponentScan注解
 ```java
 @Slf4j
 @WebFilter(urlPatterns = "/*") //@WebFilter注解配置拦截资源的路径，"/*"表示拦截所有请求
@@ -90,3 +91,14 @@ public class DemoFilter implements Filter {
     }
 }
 ```
+```java
+@ServletComponentScan  //Filter不是springboot提供的功能，所以需要加上此注解表示开启对servlet组件的支持
+@SpringBootApplication
+public class TliasWebManagementApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(TliasWebManagementApplication.class, args);
+    }
+}
+```
+
