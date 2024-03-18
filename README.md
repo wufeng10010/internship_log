@@ -62,3 +62,31 @@ public void testGenJwt(){
 ```java
 eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcxMDc1MjYzM30.OgFoQdr3StCiswwh0r5c7-O9cf4hFCfkECSPjl8AhRI
 ```
+## filter过滤器
+filter是javaweb三大组件之一，可以把对资源的请求拦截下来，从而实现特殊功能如登录校验
+<img width="987" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/5b9662b9-e385-4cae-bed9-d9de76332767">
+定义Filter:定义一个类，实现fliter接口，并重写其所有方法
+```java
+@Slf4j
+@WebFilter(urlPatterns = "/*") //@WebFilter注解配置拦截资源的路径，"/*"表示拦截所有请求
+public class DemoFilter implements Filter {
+    @Override  //初始化方法，只调用一次
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
+    }
+
+    @Override  //每次拦截到请求之后都会调用，多次
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        System.out.println("拦截到了请求，放行前的逻辑");
+        //放行
+        filterChain.doFilter(servletRequest, servletResponse );
+        System.out.println("放行后的逻辑");
+    }
+ 
+    @Override  //销毁方法，只调用一次
+    public void destroy() {
+        Filter.super.destroy();
+    }
+}
+```
