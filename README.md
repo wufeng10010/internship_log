@@ -31,3 +31,34 @@ jwt令牌以及filter过滤器
 ### 应用场景：登录
 登录成功，生成令牌，后续每个请求都要携带jwt令牌，系统在处理请求时都需先校验令牌。
 <img width="1032" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/11d68a18-fb0c-45f2-8309-3004dc4e6919">
+## 生成jwt令牌
+在pom.xml文件总导入jwt令牌的依赖
+```java
+<!--        jwt令牌依赖-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+```
+在测试类中测试jwt令牌的生成
+```java
+@Test
+public void testGenJwt(){
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("id", 1);
+    claims.put("name", "tom");
+
+    String jwt = Jwts.builder()
+            .signWith(SignatureAlgorithm.HS256, "itheima")  //签名算法
+            .setClaims(claims)  //自定义内容(载荷)
+            .setExpiration(new Date(System.currentTimeMillis() + 3600 * 1000))  //设置令牌的有效期
+            .compact();
+
+    System.out.println(jwt);
+}
+```
+输出结果：
+```java
+eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoidG9tIiwiaWQiOjEsImV4cCI6MTcxMDc1MjYzM30.OgFoQdr3StCiswwh0r5c7-O9cf4hFCfkECSPjl8AhRI
+```
