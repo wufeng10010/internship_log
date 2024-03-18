@@ -18,3 +18,16 @@ mybatis基础操作(预编译SQL)
 
 # 3.14
 springboot配置文件
+
+# 3.18
+jwt令牌以及filter过滤器
+
+## jwt令牌
+全称json web token,定义了一种简洁的自包含的格式，用于在通信双方以json数据格式安全的传输信息。由于数字签名的存在，这些信息是可靠的
+### 组成
+* Header(头),记录令牌类型，算法等
+* Payload(有效载荷)，携带一些自定义、默认信息等
+* Signature(签名)，防止token被篡改，确保安全性，将header,payload融入并加入指定秘钥
+### 应用场景：登录
+登录成功，生成令牌，后续每个请求都要携带jwt令牌，系统在处理请求时都需先校验令牌。
+<img width="1032" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/11d68a18-fb0c-45f2-8309-3004dc4e6919">
