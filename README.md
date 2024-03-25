@@ -35,8 +35,3 @@ Interceptor拦截器
 * 开启事务（一组操作开始前，开启事务）
 * 提交事务（这些操作全部成功后，提交事务）
 * 回滚事务（中间一个操作出现异常，回滚事务） 这是事务处理的核心部分！！
-<font face="微软雅黑">我是微软雅黑</font>
-<font face="STCAIYUN">我是华文彩云</font>
-<font color=#0099ff size=7 face="黑体">color=#0099ff size=72 face="黑体"</font>
-<font color=#00ffff size=72>color=#00ffff</font>
-<font color=gray size=72>color=gray</font>
