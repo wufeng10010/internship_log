@@ -34,4 +34,11 @@ Interceptor拦截器
 ### 操作
 * 开启事务（一组操作开始前，开启事务）
 * 提交事务（这些操作全部成功后，提交事务）
-* 回滚事务（中间一个操作出现异常，回滚事务） 这是事务处理的核心部分！！
+* 回滚事务（中间一个操作出现异常，回滚事务，阻止数据出错） 这是事务处理的核心部分！！
+
+### spring事务管理日志
+```.yml
+logging:
+  level:
+    org.springframework.jdbc.support.JdbcTransactionManager: debug
+```
