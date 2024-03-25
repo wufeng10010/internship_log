@@ -27,3 +27,7 @@ Interceptor拦截器
 
 # 3.25
 事务管理
+
+# 3.27
+  AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），其实就是面向方法的编程
+  例如在
