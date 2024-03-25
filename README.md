@@ -29,5 +29,48 @@ Interceptor拦截器
 事务管理
 
 # 3.27
-  AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），其实就是面向方法的编程
-  例如在
+AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），其实就是面向方法的编程
+
+### 实现
+动态代理是面向切面编程最主流的实现
+
+先通过一个场景来大致了解一下AOP的使用，例如我们需要统计每一个业务方法（如增删改查）的执行耗时，如果在每个方法上增加一段计时的代码，则进行了大量的重复工作，此时我们就可以使用AOP来执行这段逻辑：
+
+需要在pom.xml导入AOP的依赖
+```.xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
+编写AOP程序：针对特定方法根据业务需要进行编程，如这段统计计时的代码：
+```java
+public class TimeAspect {
+
+    @Around("execution(* com.itheima.service.*.*(..))")  //切入点表达式
+    public Object timeLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        //记录开始时间
+        long begin = System.currentTimeMillis();
+        
+        //调用原始方法运行
+        Object result = joinPoint.proceed();
+
+        //记录结束时间
+        long end = System.currentTimeMillis();
+
+        log.info(joinPoint.getSignature() + "方法执行耗时：{}ms", end - begin);
+
+        return result;
+    }
+}
+```
+注意在这段代码中使用的是@Around注解，需要使用joinPoint.proceed()来调用原始代码执行，并且将返回值返回，返回类型为Object，
+
+AOP的优势就在于避免大量代码的侵入编写，减少重复代码，提高开发效率以及便于维护
+
+### AOP核心概念
+连接点JoinPoint，可以被AOP控制的方法
+通知Advice，指哪些重复的逻辑，也就是共性功能，如上述的计时操作
+切入点PointCut，匹配连接点的条件，通知仅会在切入点方法执行时被应用
+切面Aspect，描述通知与切入点的对应关系，实际就是（通知+切入点）
+目标对象Target，通知所应用的对象
