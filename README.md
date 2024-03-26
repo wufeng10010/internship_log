@@ -31,7 +31,7 @@ Interceptor拦截器
 # 3.27
 AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），其实就是面向方法的编程
 
-### 实现
+## 实现
 动态代理是面向切面编程最主流的实现
 
 先通过一个场景来大致了解一下AOP的使用，例如我们需要统计一些业务方法（如增删改查）的执行耗时，如果在每个方法上增加一段计时的代码，则进行了大量的重复工作，此时我们就可以使用AOP来执行这段逻辑：
@@ -77,7 +77,7 @@ public void getTest(){
 
 以上用例展示了AOP的优势：避免大量代码的侵入编写，减少重复代码，提高开发效率以及便于维护
 
-### AOP核心概念
+## AOP核心概念
 **连接点JoinPoint**，可以被AOP控制的方法
 
 **通知Advice**，指哪些重复的逻辑，也就是共性功能，如上述的计时操作
@@ -88,7 +88,7 @@ public void getTest(){
 
 **目标对象Target**，通知所应用的对象
 
-### 通知类型
+## 通知类型
 @Around:环绕通知，在目标方法前、后都被执行 **这个通知必须要用ProceedingJoinPoint.proceed()来调用原始代码执行,且需要Object来接收原始方法的返回值并进行返回**
 
 @Before:前置通知，在目标方法前执行
@@ -99,6 +99,7 @@ public void getTest(){
 
 @AfterThrowing:异常后通知，在发生异常后执行
 
+### 切入点表达式抽取
 如果存在多个通知，且通知的切入点都是相同的，则可以把切入点表达式进行抽取，对加在通知方法上的@Around("execution(。。。)")进行简化
 
 可以在切面类中定义一个方法，加上@Pointcut注解，在注解里写上需要抽取的相同的切入点表达式：
@@ -114,3 +115,11 @@ public void getTest(){
 ```java
 @Around("pt()")
 ```
+## 切入点表达式execution匹配规则
+execution主要根据方法的返回值、包名、类名、方法名、方法参数来匹配<img width="598" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/08fbb3be-ee25-48ac-9ac1-5d4dae9a1d12">
+带问号部分可省略
+
+可以使用通配符描述切入点
+
+*****
+
