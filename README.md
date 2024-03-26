@@ -89,7 +89,27 @@ public class TimeAspect {
 **目标对象Target**，通知所应用的对象
 ### 通知类型
 @Around:环绕通知，在目标方法前、后都被执行 **这个通知必须要用ProceedingJoinPoint.proceed()来调用原始代码执行,且需要Object来接收原始方法的返回值并进行返回**
+
 @Before:前置通知，在目标方法前执行
+
 @After：后置通知，在目标方法后执行，无论是否有异常都会执行
+
 @AfterReturning:返回后通知，在目标方法后执行，有异常不会执行
+
 @AfterThrowing:异常后通知，在发生异常后执行
+
+如果存在多个通知，且通知的切入点都是相同的，则可以把切入点表达式进行抽取，对加在通知方法上的@Around("execution(。。。)")进行简化
+
+可以在切面类中定义一个方法，加上@Pointcut注解，在注解里写上需要抽取的相同的切入点表达式：
+```java
+@Pointcut("execution(* com.itheima.service.*.*(..))")
+    public void pt(){}
+```
+这样，通知方法上的注解就可以由：
+```java
+@Around("execution(* com.itheima.service.*.*(..))")
+```
+变为：
+```java
+@Around("pt()")
+```
