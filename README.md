@@ -43,7 +43,7 @@ AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），�
     <artifactId>spring-boot-starter-aop</artifactId>
 </dependency>
 ```
-编写AOP程序：针对特定方法根据业务需要进行编程，如这段统计计时的代码：
+然后编写AOP程序：针对特定方法根据业务需要进行编程，如这段统计计时的代码：
 ```java
 public class TimeAspect {
 
@@ -65,8 +65,17 @@ public class TimeAspect {
 }
 ```
 注意在这段代码中使用的是@Around注解，需要使用joinPoint.proceed()来调用原始代码执行，并且将返回值返回，返回类型为Object，
+这样，我们就可以在运行com.itheima.service包下的所有类的所有方法时，都能统计到它们各自的运行时间，如以下测试：
+```java
+@Test
+    public void getTest(){
+        Dept dept = deptService.getById(2); //获取id为2的部门数据
+    }
+```
+控制台中就可以得到如下结果：
+<img width="573" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/1b1727a6-7481-4495-b9af-80d14dbdd7e1">
 
-AOP的优势就在于避免大量代码的侵入编写，减少重复代码，提高开发效率以及便于维护
+以上用例明显展示了AOP的优势：避免大量代码的侵入编写，减少重复代码，提高开发效率以及便于维护
 
 ### AOP核心概念
 连接点JoinPoint，可以被AOP控制的方法
