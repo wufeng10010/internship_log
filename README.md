@@ -68,9 +68,9 @@ public class TimeAspect {
 这样，我们就可以在运行com.itheima.service包下的所有类的所有方法时，都能统计到它们各自的运行时间，如以下测试：
 ```java
 @Test
-    public void getTest(){
-        Dept dept = deptService.getById(2); //获取id为2的部门数据
-    }
+public void getTest(){
+    Dept dept = deptService.getById(2); //获取id为2的部门数据
+}
 ```
 控制台中就可以得到如下结果：
 <img width="573" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/1b1727a6-7481-4495-b9af-80d14dbdd7e1">
@@ -87,6 +87,7 @@ public class TimeAspect {
 **切面Aspect**，描述通知与切入点的对应关系，实际就是（通知+切入点）
 
 **目标对象Target**，通知所应用的对象
+
 ### 通知类型
 @Around:环绕通知，在目标方法前、后都被执行 **这个通知必须要用ProceedingJoinPoint.proceed()来调用原始代码执行,且需要Object来接收原始方法的返回值并进行返回**
 
