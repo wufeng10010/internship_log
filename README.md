@@ -87,4 +87,9 @@ public class TimeAspect {
 **切面Aspect**，描述通知与切入点的对应关系，实际就是（通知+切入点）
 
 **目标对象Target**，通知所应用的对象
-
+### 通知类型
+@Around:环绕通知，在目标方法前、后都被执行 **这个通知必须要用ProceedingJoinPoint.proceed()来调用原始代码执行,且需要Object来接收原始方法的返回值并进行返回**
+@Before:前置通知，在目标方法前执行
+@After：后置通知，在目标方法后执行，无论是否有异常都会执行
+@AfterReturning:返回后通知，在目标方法后执行，有异常不会执行
+@AfterThrowing:异常后通知，在发生异常后执行
