@@ -160,16 +160,16 @@ execution主要根据方法的返回值、包名、类名、方法名、方法�
 .. : 可以通配任意层级的包，或任意类型任意个数的参数
 
 ### 第二种方式，使用@annotation注解
-该注解用于标识有特定注解的方法（这个特定注解由我们自己定义），如我们定义一个一下特定注解：
+该注解用于标识有特定注解的方法（这个特定注解由我们自己定义），如我们定义一个以下特定注解：
 ```java
 @Retention(RetentionPolicy.RUNTIME) //指定这个注解什么时候生效（运行时有效）
 @Target(ElementType.METHOD) //这个注解可以作用在哪些地方（方法上）
 public @interface Log {
 }
 ```
-然后在通知的切面类上加上注解@Around("@annotation(com.itheima.anno.Log)")，com.itheima.anno.Log是自定义注解@Log的全类名
+然后在通知上加上注解@Around("@annotation(...)")，...是自定义注解@Log的全类名
 
-如果我们想要这个通知匹配如增删改的方法，直接在这些方法上加入该注解：
+如果我们想要这个通知匹配如增删改的方法，直接在这些方法上加入自定义注解@Log：
 ```java
 @Log
 public void deleteById(Integer id){
