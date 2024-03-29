@@ -45,6 +45,9 @@ AOP:Aspect Oriented Programming（面向切面编程，面向方面编程），�
 ```
 然后编写AOP程序：针对特定方法根据业务需要进行编程，如这段统计计时的代码：
 ```java
+@Component
+@Slf4j
+@Aspect
 public class TimeAspect {
 
     @Around("execution(* com.itheima.service.*.*(..))")  //切入点表达式
@@ -118,6 +121,9 @@ public void pt(){}
 ```
 如上述的记录时间切面类就可以改为：
 ```java
+@Component
+@Slf4j
+@Aspect
 public class TimeAspect {
 
     @Pointcut("execution(* com.itheima.service.*.*(..))")  //在此处定义切入点表达式
@@ -143,7 +149,7 @@ public class TimeAspect {
     public 其他通知方法。。。
 }
 ```
-### 切入点表达式execution匹配规则
+#### 切入点表达式execution匹配规则
 execution主要根据方法的返回值、包名、类名、方法名、方法参数来匹配<img width="598" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/08fbb3be-ee25-48ac-9ac1-5d4dae9a1d12">
 带问号部分可省略
 
@@ -153,3 +159,28 @@ execution主要根据方法的返回值、包名、类名、方法名、方法�
 
 .. : 可以通配任意层级的包，或任意类型任意个数的参数
 
+### 第二种方式，使用@annotation注解
+该注解用于标识有特定注解的方法（这个特定注解由我们自己定义），如我们定义一个一下特定注解：
+```java
+@Retention(RetentionPolicy.RUNTIME) //指定这个注解什么时候生效（运行时有效）
+@Target(ElementType.METHOD) //这个注解可以作用在哪些地方（方法上）
+public @interface Log {
+}
+```
+然后在通知的切面类上加上注解@Around("@annotation(com.itheima.anno.Log)")，com.itheima.anno.Log是自定义注解@Log的全类名
+
+如果我们想要这个通知匹配如增删改的方法，直接在这些方法上加入该注解：
+```java
+@Log
+public void deleteById(Integer id){
+    删除业务操作
+}
+@Log
+public void add(Dept dept) {
+    增加业务操作
+}
+@Log
+public void update(Dept dept) {
+    更改操作
+}
+```
