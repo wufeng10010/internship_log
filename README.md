@@ -274,7 +274,10 @@ public class LogAspect {
 }
 ```
 然后在相关的执行方法上加上@Log注解，标记此方法为切入点，最后启动服务进行测试
+
+在前端页面登录后并点击相关操作
 <img width="1210" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/81297d22-b0bf-42f6-814c-cfee4cb3303c">
-在前端页面登录后并点击相关操作，查看数据库
-<img width="1197" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/c94168d1-91eb-44d4-b4b3-90f27fada9e4">
+查看数据库
+<img width="1201" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/99e97f03-dc96-4d2f-8c8a-7624c907f386">
+
 相关操作都日志都已经被记录下来，测试完成
