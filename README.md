@@ -99,13 +99,14 @@ public void getTest(){
 
 @AfterThrowing:异常后通知，在发生异常后执行
 
-### 切入点表达式抽取
-如果存在多个通知，且通知的切入点都是相同的，则可以把切入点表达式进行抽取，对加在通知方法上的@Around("execution(。。。)")进行简化
+## 切入点表达式抽取
+如果存在多个通知，且通知的切入点都是相同的，则可以把切入点表达式进行抽取，来对通知方法上的@Around("execution(。。。)")进行简化
+### 第一种方式，使用@Pointcut注解
 
 可以在切面类中定义一个方法，加上@Pointcut注解，在注解里写上需要抽取的相同的切入点表达式：
 ```java
 @Pointcut("execution(* com.itheima.service.*.*(..))")
-    public void pt(){}
+public void pt(){}
 ```
 这样，通知方法上的注解就可以由：
 ```java
@@ -115,7 +116,34 @@ public void getTest(){
 ```java
 @Around("pt()")
 ```
-## 切入点表达式execution匹配规则
+如上述的记录时间切面类就可以改为：
+```java
+public class TimeAspect {
+
+    @Pointcut("execution(* com.itheima.service.*.*(..))")  //在此处定义切入点表达式
+    public void pt(){}
+
+    @Around("pt()")  //切入点
+    public Object timeLog(ProceedingJoinPoint joinPoint) throws Throwable {
+        //记录开始时间
+        long begin = System.currentTimeMillis();
+        
+        //调用原始方法运行
+        Object result = joinPoint.proceed();
+
+        //记录结束时间
+        long end = System.currentTimeMillis();
+
+        log.info(joinPoint.getSignature() + "方法执行耗时：{}ms", end - begin);
+
+        return result;
+    }
+
+    @Around("pt()")  //切入点
+    public 其他通知方法。。。
+}
+```
+### 切入点表达式execution匹配规则
 execution主要根据方法的返回值、包名、类名、方法名、方法参数来匹配<img width="598" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/08fbb3be-ee25-48ac-9ac1-5d4dae9a1d12">
 带问号部分可省略
 
