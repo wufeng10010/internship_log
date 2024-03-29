@@ -184,3 +184,97 @@ public void update(Dept dept) {
     更改操作
 }
 ```
+
+## AOP案例-记录操作日志
+#### 操作日志
+日志信息包括操作人id，操作时间，执行方法的全类名，执行方法名，方法运行参数、返回值，方法执行时长
+
+首先在数据库中创建一张操作日志表
+<img width="885" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/4aa712e6-fa9f-44a9-8045-36a342e124a4">
+
+创建操作日志的pojo实体类OperateLog：
+```java
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class OperateLog {
+    private Integer id; //ID
+    private Integer operateUser; //操作人ID
+    private LocalDateTime operateTime; //操作时间
+    private String className; //操作类名
+    private String methodName; //操作方法名
+    private String methodParams; //操作方法参数
+    private String returnValue; //操作方法返回值
+    private Long costTime; //操作耗时
+}
+```
+创建操作日志的Mapper接口，实现操作日志的插入操作
+```java
+@Mapper
+public interface OperateLogMapper {
+    //插入日志数据
+    @Insert("insert into operate_log (operate_user, operate_time, class_name, method_name, method_params, return_value, cost_time) " +
+            "values (#{operateUser}, #{operateTime}, #{className}, #{methodName}, #{methodParams}, #{returnValue}, #{costTime});")
+    public void insert(OperateLog log);
+}
+```
+创建操作日志的切面类:
+```java
+@Aspect
+@Slf4j
+@Component
+public class LogAspect {
+
+    @Autowired
+    private HttpServletRequest request;  //自动注入请求头，获取里面的jwt令牌
+
+    @Autowired
+    private OperateLogMapper operateLogMapper;
+
+    @Around("@annotation(com.itheima.anno.Log)")
+    public Object recordLog(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        //操作者id
+        String jwt = request.getHeader("token");  //拿到jwt令牌
+        Claims claims = JwtUtils.parseJWT(jwt);
+        Integer operateUser = (Integer) claims.get("id"); //获取操作人的id
+
+        //操作时间
+        LocalDateTime operateTime = LocalDateTime.now();
+
+        //操作类名
+        String className = joinPoint.getTarget().getClass().getName();
+
+        //操作方法名
+        String methodName = joinPoint.getSignature().getName();
+
+        //操作方法参数
+        Object[] args = joinPoint.getArgs();
+        String methodParams = Arrays.toString(args);
+
+        long begin = System.currentTimeMillis();
+        //调用原始方法执行
+        Object result = joinPoint.proceed();
+        long end = System.currentTimeMillis();
+
+        //方法返回值
+        String returnValue = JSONObject.toJSONString(result);
+
+        //执行时间
+        long costTime = end - begin;
+
+        //记录操作日志
+        OperateLog operateLog = new OperateLog(null, operateUser, operateTime, className,
+                                                methodName, methodParams, returnValue, costTime);
+        operateLogMapper.insert(operateLog);
+        log.info("记录操作日志：{}", operateLog);
+
+        return result;
+    }
+}
+```
+然后在相关的执行方法上加上@Log注解，标记此方法为切入点，最后启动服务进行测试
+<img width="1210" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/81297d22-b0bf-42f6-814c-cfee4cb3303c">
+在前端页面登录后并点击相关操作，查看数据库
+<img width="1197" alt="image" src="https://github.com/wufeng10010/jinqiao_log/assets/131955051/c94168d1-91eb-44d4-b4b3-90f27fada9e4">
+相关操作都日志都已经被记录下来，测试完成
